@@ -15,6 +15,14 @@ public class Materia {
         return calificacion;
     }
 
+    public void setNomMat(String nomMat) {
+        this.nomMat = nomMat;
+    }
+
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
+    }
+
     @Override
     public String toString(){
         return "Materia: " + nomMat + " Calificación: " + calificacion;
