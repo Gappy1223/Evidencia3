@@ -10,6 +10,10 @@ public class Estudiante {
         this.edad = edad;
     }
 
+    public ArrayList<Materia> getCalificaciones() {
+        return calificaciones;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -26,7 +30,11 @@ public class Estudiante {
         this.edad = edad;
     }
 
-    public void agregarCalificacion(String nomMat, Double calificacion){
+    public void agregarCalificacion(String nomMat, Double calificacion) throws CalificacionInvalidaExceptiom{
+        if(calificacion > 100 || calificacion < 0){
+            throw new CalificacionInvalidaExceptiom("Solo se aceptan calificaciones del 0 al 100");
+        }
+
         calificaciones.add(new Materia(nomMat, calificacion));
     }
 
@@ -48,4 +56,8 @@ public class Estudiante {
         System.out.print("Promedio: " + Promedio());
     }
 
+    @Override
+    public String toString(){
+        return "Nombre: " + nombre + " Edad: " + edad + " Promedio: " + Promedio();
+    }
 }
