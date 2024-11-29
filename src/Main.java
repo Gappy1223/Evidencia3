@@ -17,13 +17,18 @@ public class Main {
         try{
           do{
               try {
-                  System.out.println("Menú");
+                  System.out.println("\nMenú");
                   System.out.println("1. Agregar un estudiante \n2. Buscar un alumno \n3. Mostrar estudiantes \n4. Leer archivo \n5. Guardar progreso \n6. Salir");
                   opcion = leerEntero(scanner, "Elige: ");
 
                   switch (opcion){
                       case 1:
                           nombre = leerCadena(scanner, "Ingresa nombre del estudiante: ");
+                          if(universidad.checarEstudiante(nombre)){
+                              System.out.println("Ya esta registrado un estudiante con ese nombre");
+                              nombre = leerCadena(scanner, "Ingrese otro nombre del estudiante: ");
+                          }
+                          scanner.nextLine();
                           edad = leerEntero(scanner, "Ingresa edad del alumno: ");
                           if(edad<= 0){
                               throw new EntradaInvalida("Solo edades positivas");
@@ -48,8 +53,7 @@ public class Main {
                           universidad.agregarEstudiante(estudiante);
                           break;
                       case 2:
-                          System.out.print("Ingresa nombre que quiere buscar: ");
-                          nombre = scanner.next();
+                          nombre = leerCadena(scanner,"Ingresa nombre del estudiante: ");
                           Estudiante estudianteBuscar = universidad.buscarEstudiante(nombre);
                           if (estudianteBuscar != null) {
                               estudianteBuscar.mostrarInformacion();
@@ -68,7 +72,7 @@ public class Main {
                       case 5:
                           System.out.print("Ingresa ruta del archivo para guardar: ");
                           ruta = scanner.next();
-                      universidad.guardarArchivo(ruta);
+                          universidad.guardarArchivo(ruta);
                           break;
                       case 6:
                           System.out.println("Saliendo...");
@@ -78,12 +82,12 @@ public class Main {
                           break;
                   }
               } catch (InputMismatchException e) {
-                  System.out.println("Solo se permiten números.");
+                  System.out.println("Solo se permiten números dentro del rango.");
                   scanner.next(); // Limpiar el buffer
               }
 
 
-          } while (opcion == 1||opcion == 2||opcion ==3||opcion == 4||opcion == 5);
+          } while (opcion != 6);
 
 
         } catch (FileNotFoundException e) {
@@ -115,7 +119,7 @@ public class Main {
                 System.out.print(mensaje);
                 return scanner.nextDouble();
             } catch (InputMismatchException e) {
-                System.out.println("Error: Solo se permiten números decimales. Intenta de nuevo.");
+                System.out.println("Error: Solo se permiten números positivos. Intenta de nuevo.");
                 scanner.next(); // Limpiar el buffer
             }
         }
@@ -125,7 +129,7 @@ public class Main {
         while (true) {
             System.out.print(mensaje);
             String entrada = scanner.next();
-            if (entrada.matches("[a-zA-Z]+")) {
+            if (entrada.matches("[a-zA-Z ]+")) {
                 return entrada;
             } else {
                 System.out.println("Error: Solo se permiten letras. Intenta de nuevo.");

@@ -3,12 +3,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Universidad implements Imprimible{
-    private Map<String, Estudiante> estudiantes;
-    private Map<String, Materia> materias;
+    private HashMap<String, Estudiante> estudiantes;
+    private HashMap<String, Materia> materias;
 
     public Universidad() {
         this.estudiantes = new HashMap<>();
         this.materias = new HashMap<>();
+    }
+
+    public HashMap<String, Estudiante> getEstudiantes() {
+        return estudiantes;
     }
 
     public void agregarEstudiante(Estudiante estudiante){
@@ -28,6 +32,15 @@ public class Universidad implements Imprimible{
                 System.out.println();
             }
         }
+    }
+
+    public boolean checarEstudiante(String nombre){
+        for(Estudiante estudiante : estudiantes.values()){
+            if (estudiante.getNombre().equals(nombre)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void leerArchivo(String ruta) throws IOException {
@@ -65,5 +78,8 @@ public class Universidad implements Imprimible{
 
     @Override
     public void imprimir() {
+        for(Estudiante estudiante : estudiantes.values()){
+            estudiante.mostrarInformacion();
+        }
     }
 }
